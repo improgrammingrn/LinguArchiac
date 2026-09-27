@@ -1,6 +1,7 @@
 package com.example.linguarchiac
 //imports
 import androidx.compose.material3.Card
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.Box
 import android.os.Bundle
@@ -61,13 +62,22 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
+import android.content.Intent
+import android.net.Uri
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.LaunchedEffect
 
 //linked
 class MainActivity : ComponentActivity() {
+    private var deepLinkUri:Uri?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+        deepLinkUri=intent?.data
 
         enableEdgeToEdge()
         val ragEngine = RagEngine(archivestories)
@@ -77,6 +87,13 @@ class MainActivity : ComponentActivity() {
             LinguArchiacTheme {
 
                 val navController = rememberNavController()
+                LaunchedEffect(Unit) {
+                    if(deepLinkUri?.scheme=="linguarchiac"&&
+                        deepLinkUri?.host=="submissionthanks")
+                    {
+                        navController.navigate("submissionthanks")
+                    }
+                }
 
                 NavHost(
                     navController = navController,
@@ -278,7 +295,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.height(10.dp)
                     )
                     Text(
-                        text = "Every story belong to an identity. Share yours. Help us save them.",
+                        text = "Every story is a part of one's identity. Share your story.",
                         fontSize = 18.sp,
                         color = Color(0xFF5A4635),
                         textAlign = TextAlign.Center
@@ -313,7 +330,7 @@ class MainActivity : ComponentActivity() {
                                 modifier = Modifier.height(8.dp)
                             )
                             Text(
-                                text = "Have a story? Share it with the archive.",
+                                text = "One story at a time, share a story you would be incomplete without.",
                                 fontSize = 14.sp,
                                 lineHeight = 20.sp,
                                 color = Color(0xFF6B5745),
@@ -352,30 +369,33 @@ class MainActivity : ComponentActivity() {
                         CommunityStep(
                             number = "1",
                             title = "Share",
-                            description = "Tell you Story"
+                            description = "Tell your Story"
                         )
                         CommunityStep(
                             number = "2",
-                            title = "Share",
-                            description = "Tell you Story"
+                            title = "Approved",
+                            description = "LinguArchiac approves integrity"
                         )
                         CommunityStep(
                             number = "3",
-                            title = "Share",
-                            description = "Tell you Story"
+                            title = "Archived",
+                            description = "Posted on the archive"
                         )
                     }
+                    Spacer(
+                        modifier = Modifier.height(20.dp)
+                    )
                     Text(
-                        text = "From a community",
+                        text = "From a community whose voices deserve to be heard.",
                         fontSize = 25.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFF5A4635)
                     )
                     Spacer(
-                        modifier = Modifier.height(8.dp)
+                        modifier = Modifier.height(20.dp)
                     )
                     Text(
-                        text = "Approved community stories will be shared:",
+                        text = "Approved stories will be shared in the archive.",
                         fontSize = 14.sp,
                         color = Color(0xFF6B5745),
                         textAlign = TextAlign.Center
@@ -405,7 +425,7 @@ class MainActivity : ComponentActivity() {
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Text(
-                                text = "The archive blaj blah",
+                                text = "The archive will host your story.",
                                 fontSize = 17.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = Color(0xFF5A4635),
@@ -415,7 +435,7 @@ class MainActivity : ComponentActivity() {
                                 modifier = Modifier.height(10.dp)
                             )
                             Text(
-                                text = "Community contributions will be available soon",
+                                text = "Contributions will be available soon.",
                                 fontSize = 13.sp,
                                 lineHeight = 19.sp,
                                 color = Color(0xFF6B5745),
@@ -470,7 +490,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.height(20.dp)
                 )
                 Text(
-                    text = "We really appreicate...",
+                    text = "We really appreciate your voice. ",
                     fontSize = 18.sp,
                     lineHeight = 21.sp,
                     textAlign = TextAlign.Center,
@@ -480,7 +500,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.height(12.dp)
                 )
                 Text(
-                    text = "your contirbution means...",
+                    text = "Every story keeps a language thriving.",
                     fontSize = 16.sp,
                     lineHeight = 24.sp,
                     color = Color(0xFF6B5745),
@@ -564,235 +584,39 @@ class MainActivity : ComponentActivity() {
     fun SubmitStoryScreen(
         navController: NavController
     ) {
-        var language by remember { mutableStateOf("") }
-        var title by remember { mutableStateOf(("")) }
-        var originalStory by remember { mutableStateOf("") }
-        var englishStory by remember { mutableStateOf("") }
-        var consent by remember { mutableStateOf(false) }
-        val context = LocalContext.current
-        Box(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            Image(
-                painter = painterResource(R.drawable.map_bg),
-                contentDescription = "map",
-                contentScale = ContentScale.Crop,
-                alpha = 0.35f,
-                modifier = Modifier.fillMaxSize()
-            )
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color(0x99E2DACB))
-            )
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-                    .padding(
-                        start = 28.dp,
-                        end = 28.dp,
-                        top = 40.dp,
-                        bottom = 40.dp
-                    )
-            ) {
-                Text(
-                    text = "Share a story",
-                    fontSize = 38.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF5A4635)
-                )
-                Spacer(
-                    modifier = Modifier.height(8.dp)
-                )
-                Text(
-                    text = "Help us preserve.",
-                    fontSize = 15.sp,
-                    lineHeight = 21.sp,
-                    color = Color(0xFF6B5745)
-                )
-                Spacer(
-                    modifier = Modifier.height(28.dp)
-                )
-                Text(
-                    text = "Language",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF5A4635)
-                )
-                Spacer(
-                    modifier = Modifier.height(8.dp)
-                )
-                OutlinedTextField(
-                    value = language,
-                    onValueChange = {
-                        language = it
-                    },
-                    placeholder = {
-                        Text("Enter a language:")
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true,
-                    shape = RoundedCornerShape(20.dp)
-                )
-                Spacer(
-                    modifier = Modifier.height(22.dp)
-                )
-                Text(
-                    text = "story title",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF5A4635)
-                )
-                Spacer(
-                    modifier = Modifier.height(10.dp)
-                )
-                OutlinedTextField(
-                    value = title,
-                    onValueChange = {
-                        title = it
-                    },
-                    placeholder = {
-                        Text("give your story a name")
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true,
-                    shape = RoundedCornerShape(16.dp)
-                )
-                Spacer(
-                    modifier = Modifier.height(20.dp)
-                )
-                Text(
-                    text = "Your story",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF5A4635)
-                )
-                Spacer(
-                    modifier = Modifier.height(30.dp)
-                )
-                Text(
-                    text = "write the og lang",
-                    fontSize = 13.sp,
-                    color = Color(0xFF6B5745)
-                )
-                Spacer(
-                    modifier = Modifier.height(8.dp)
-                )
-                OutlinedTextField(
-                    value = originalStory,
-                    onValueChange = {
-                        originalStory = it
-                    },
-                    placeholder = {
-                        Text("Tell your story")
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(190.dp),
-                    shape = RoundedCornerShape(16.dp)
-                )
-                Spacer(
-                    modifier = Modifier.height(22.dp)
-                )
-                Text(
-                    text = "English or common lang",
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF5A4635)
-                )
-                Spacer(
-                    modifier = Modifier.height(5.dp)
-                )
-                Text(
-                    text = "If possible provide a translation.",
-                    fontSize = 15.sp,
-                    lineHeight = 21.sp,
-                    color = Color(0xFF6B5745)
-                )
-                OutlinedTextField(
-                    value = englishStory,
-                    onValueChange = {
-                        englishStory = it
-                    },
-                    placeholder = {
-                        Text("Translation")
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(190.dp),
-                    shape = RoundedCornerShape(15.dp)
-                )
-                Spacer(
-                    modifier = Modifier.height(24.dp)
-                )
-                Text(
-                    text = "Audio recording",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF5A4635)
-                )
-                Spacer(
-                    modifier = Modifier.height(15.dp)
-                )
-                Text(
-                    text = "Optional, a recording can be super beneficial",
-                    fontSize = 15.sp,
-                    lineHeight = 21.sp,
-                    color = Color(0xFF6B5745)
-                )
-                Spacer(
-                    modifier = Modifier.height(10.dp)
-                )
-                OutlinedButton(
-                    onClick = {
-                        navController.navigate("submissionthanks")
-                    },
-                    enabled = language.isNotBlank() &&
-                            title.isNotBlank() &&
-                            originalStory.isNotBlank() &&
-                            consent,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(52.dp),
-                    shape = RoundedCornerShape(15.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF8A6A45)
-                    )
-                ) {
-                    Text(
-                        text = "Submit for review",
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-                Spacer(
-                    modifier = Modifier.height(22.dp)
-                )
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Checkbox(
-                        checked = consent,
-                        onCheckedChange = {
-                            consent = it
-                        }
-                    )
-                    Text(
-                        text = "I give permission",
-                        fontSize = 13.sp,
-                        lineHeight = 18.sp,
-                        color = Color(0xFF5A4635)
-                    )
-                    Spacer(
-                        modifier = Modifier.height(20.dp)
-                    )
-                }
-            }
-        }
-    }
+        AndroidView(
+            factory = { context ->
+                WebView(context).apply {
 
+                    settings.javaScriptEnabled = true
+                    settings.domStorageEnabled = true
+
+                    webViewClient = object : WebViewClient() {
+
+                        override fun shouldOverrideUrlLoading(
+                            view: WebView?,
+                            request: WebResourceRequest?
+                        ): Boolean {
+
+                            val url = request?.url?.toString() ?: ""
+
+                            if (url.contains("submissionthanks")) {
+                                navController.navigate("submissionthanks")
+                                return true
+                            }
+
+                            return false
+                        }
+                    }
+
+                    loadUrl(
+                        "https://form.jotform.com/samadritabha786/linguarchiac-story-submission"
+                    )
+                }
+            },
+            modifier = Modifier.fillMaxSize()
+        )
+    }
 
     //first screen
     @Composable
@@ -1040,7 +864,7 @@ class MainActivity : ComponentActivity() {
                                 modifier = Modifier.height(8.dp)
                             )
                             Text(
-                                text = "Explore the stories in our supported languages.",
+                                text = "Explore stories in our supported languages.",
                                 fontSize = 15.sp,
                                 lineHeight = 20.sp,
                                 color = Color(0xFF6B5745)
@@ -1121,10 +945,28 @@ class MainActivity : ComponentActivity() {
 
                                     }
                                 }
+                            }else if (searchQuery.isNotBlank()){
+                                Spacer(
+                                    modifier=Modifier.height(20.dp)
+                                )
+                                Text(
+                                    text="No stories found.",
+                                    fontSize=20.sp,
+                                    color=Color(0xFF5A4635),
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Spacer(
+                                    modifier=Modifier.height(20.dp)
+                                )
+                                Text(
+                                    text="Try searching for another story type, or theme.",
+                                    fontSize = 15.sp,
+                                    color=Color(0xFF6B5745)
+                                )
                             }
 
                             Text(
-                                text = "Pro-tip: Search a theme, story type, or a language name. Eg. 'God', 'demons', 'folkatale', etc.",
+                                text = "Pro-tip: Search a theme, story type, a supported language name, or genre. Eg. 'God', 'Ainu', 'folkatale', etc.",
                                 fontSize = 14.sp,
                                 color = Color(0xFF6B5745)
                             )
@@ -1520,11 +1362,11 @@ fun TotoScreen(
         homelandSubtitle = "homeland",
         scriptYear = "2015",
         scriptTitle = "Toto's script",
-        originDescription = "Toto is a small Indigenous language spoken by the Toto community in the Totopara region of West Bengal, India. The language faces pressure from more widely spoken regional languages.",
-        notableWorks = "Toto cultural traditions are preserved largely through oral storytelling, songs, folk traditions, and community knowledge passed between generations.",
+        originDescription = "Toto is a small Indigenous language spoken in the Toto community in Totopara, West Bengal, India. The language faces pressure from more widely spoken regional languages such as Bengali, Hindi, and English. Children who grow up speaking Toto at home primarily use Bengali in educational settings. Currently, there are about ~1000 speakers, even though there are about ~1,600 people in the Toto tribe.",
+        notableWorks = "Dhaniram Toto had created the first-ever dictionary and writing system in 2025. It had primarily been an oral language, and creating the writing system helped move Toto away from extinction. A trilinugal dictionary has been published in 2023, in English, Bengali, and Toto.",
         scriptSubtitle = "was recognized.",
-        regionDescription = "Toto is spoken in West Bengal, India. It is primarily spoken in Totopara near the Bhutan border.",
-        rootsDescription = "Toto is a part of the Tibeto-Burman family. The speakers were first documented in 1815 by the British, and it was noted for its distinctiveness. Through surveys, ancestral ties have been found to Bhutan and Mongolia.",
+        regionDescription = "Toto is spoken in West Bengal, India. It is primarily spoken in Totopara near the India-Bhutan border.",
+        rootsDescription = "Toto is a part of the Tibeto-Burman family. It was first documented in 1815 by the British, and it was noted for its unique tone. It has ancestral ties to Bhutan and Mongolia.",
         endangeredDescription = "Dominant languages such as Bengali, Hindi, and English are increasingly used for education, employment, and daily life, reducing the need for Toto.",
         archiveRoute = "totoarchive"
 
@@ -1543,11 +1385,11 @@ fun AinuScreen(
         homelandTitle = "1",
         homelandSubtitle = "homeland",
         scriptYear = "2019",
-        originDescription = "Ainu is an Indigenous language of the Ainu people of northern Japan, particularly Hokkaido. After decades of language suppression and declining speakers, revitalization efforts are working to preserve and teach Ainu.",
+        originDescription = "Ainu is an Indigenous language of the Ainu people of northern Japan, particularly Hokkaido. After decades of declining speakers, there are many efforts for revitalization as many work to preserve and teach Ainu.",
         notableWorks = "Ainu oral traditions include yukar, epic narratives traditionally passed down through generations, along with songs, folktales, and other forms of oral storytelling.",
         scriptTitle = "the people",
         scriptSubtitle = "were recognized.",
-        regionDescription = "Ainu is traditionally spoken by the indegnious Ainu people of northern Japan. THe language is concentrated in Hokkaido. Smaller Ainu communities have also existed in other parts of Japan and in nearby regions.",
+        regionDescription = "Ainu is traditionally spoken by the indigenous Ainu people of northern Japan. THe language is concentrated in Hokkaido. Smaller Ainu communities have also existed in other parts of Japan and in nearby regions.",
         rootsDescription = "Ainu is generally considered as an isolated language and has not been known to be related to another known language family. It has its own distinct vocabulary and grammatical structure.",
         endangeredDescription = "Ainu declined sharply as Japanese became dominant through assimilation, education, and social pressures. Today, efforts to revitalize the language include language classes, educational programs, and cultural initiatives.",
         archiveRoute = "ainuarchive"
