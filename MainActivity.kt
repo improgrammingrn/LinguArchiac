@@ -69,6 +69,8 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.style.TextOverflow
 
 //linked
 class MainActivity : ComponentActivity() {
@@ -136,8 +138,9 @@ class MainActivity : ComponentActivity() {
                     composable("story1") {
                         StoryScreen(
                             navController = navController,
-                            title = "The Rich Man and \nthe Demon",
-                            description = "Ainu Folktale",
+                            title = "Pananpe Escapes from Demon’s Hands",
+                            description = "Deception fools no one. Explore this idea through the short "+
+                            "folktale about what goes around, comes around.",
                             image = R.drawable.ainu,
                             engText = StoryText.story1English,
                             ogText = StoryText.story1Japanese,
@@ -148,8 +151,10 @@ class MainActivity : ComponentActivity() {
                     composable("story2") {
                         StoryScreen(
                             navController = navController,
-                            title = "The Singing Cuckoo",
-                            description = "Ainu Folktale",
+                            title = "The Singing Cuckoo and The Thunder God",
+                            description = "We often love one another, but never the nature around us."+
+                            " In this short folktale, you will explore how connections between humans" +
+                            " and nature is incredibly important, and must be present for a healthy livelihood.",
                             image = R.drawable.ainu_story_2,
                             engText = StoryText.story2English,
                             ogText = StoryText.story2Japanese,
@@ -160,8 +165,10 @@ class MainActivity : ComponentActivity() {
                     composable("story3") {
                         StoryScreen(
                             navController = navController,
-                            title = "The Bad Bear",
-                            description = "Ainu Folktale",
+                            title = "The Girl in the Snow",
+                            description = "Bravery combats all issues. Even when a big bear comes"+
+                            " and disrupts the entire community. This story showcases the importance"+
+                            " of resilience and bravery through a communal setting.",
                             image = R.drawable.ainu_bear,
                             engText = StoryText.story3English,
                             ogText = StoryText.story3Japanese,
@@ -174,7 +181,10 @@ class MainActivity : ComponentActivity() {
                         StoryScreen(
                             navController = navController,
                             title = "White Clew & Black Clew",
-                            description = "Ainu Folktale",
+                            description = "Consequences are something no one likes. Through melodious "+
+                            "refrains, you can understand why morality is important."+" Ethics are valued"
+                            +" heavily in the Ainu culture, and through this story you can take a glimpse"+
+                            " at how it has been embedded in the culture for centuries.",
                             image = R.drawable.ainustory3,
                             engText = StoryText.story4English,
                             ogText = StoryText.story4Japanese,
@@ -185,7 +195,8 @@ class MainActivity : ComponentActivity() {
                         BengaliStoryScreen(
                             navController = navController,
                             title = "Love Your Enemies",
-                            description = "Toto · Christian Teaching",
+                            description = "Enemies are associated with the word hate. In this Christian"+
+                            " teaching you will learn why enemies should be associated with an antonym, love.",
                             image = R.drawable.loveyourenemy,
                             engText = StoryText.story1english,
                             ogText = StoryText.story1Bengali,
@@ -196,7 +207,9 @@ class MainActivity : ComponentActivity() {
                         BengaliStoryScreen(
                             navController = navController,
                             title = "Moses's Laws",
-                            description = "Toto · Christian Teaching",
+                            description = "Laws are ideas we must adhere to."+
+                                    " But why? In this short teaching you can understand Moses's Laws"+
+                            " and why they were created.",
                             image = R.drawable.lawsofgod,
                             engText = StoryText.story2english,
                             ogText = StoryText.story2Bengali,
@@ -207,7 +220,10 @@ class MainActivity : ComponentActivity() {
                         BengaliStoryScreen(
                             navController = navController,
                             title = "The Prodigal Son",
-                            description = "Toto · Christian Teaching",
+                            description = "A father's love can't be described through words. Yet it has"+
+                            " been in this short Bible teaching. After his son betrays him, his father"+
+                            " still welcomes him with open arms." +
+                            " Why? Read more to find out.",
                             image = R.drawable.forgiveness,
                             engText = StoryText.story3english,
                             ogText = StoryText.story3Bengali,
@@ -217,8 +233,10 @@ class MainActivity : ComponentActivity() {
                     composable("myaamiastory1") {
                         MyaamiaStoryScreen(
                             navController = navController,
-                            title = "The Myaamian Origin",
-                            description = "Origin of the Myaamia",
+                            title = "Emergence of the Myaamia",
+                            description = "This story is about how the Myaamian tribe had first come"+
+                            " to North America. They had sailed, and faced a journey only one can describe."
+                            +" Read more to find out how they settled, and adjusted to life in America.",
                             image = R.drawable.myaamia,
                             engText = StoryText.story1eng,
                             ogText = StoryText.story1Myaamia
@@ -282,26 +300,18 @@ class MainActivity : ComponentActivity() {
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFF5A4635)
                     )
+
                     Spacer(
-                        modifier = Modifier.height(10.dp)
+                        modifier = Modifier.height(40.dp)
                     )
                     Text(
-                        text = "Stories preserved by the people who carry them.",
+                        text = "Share your story in a language you wish to preserve.",
                         fontSize = 18.sp,
                         color = Color(0xFF5A4635),
                         textAlign = TextAlign.Center
                     )
                     Spacer(
-                        modifier = Modifier.height(10.dp)
-                    )
-                    Text(
-                        text = "Every story is a part of one's identity. Share your story.",
-                        fontSize = 18.sp,
-                        color = Color(0xFF5A4635),
-                        textAlign = TextAlign.Center
-                    )
-                    Spacer(
-                        modifier = Modifier.height(30.dp)
+                        modifier = Modifier.height(60.dp)
                     )
                     Card(
                         modifier = Modifier.fillMaxWidth(),
@@ -327,17 +337,17 @@ class MainActivity : ComponentActivity() {
                                 color = Color(0xFF5A4635)
                             )
                             Spacer(
-                                modifier = Modifier.height(8.dp)
+                                modifier = Modifier.height(20.dp)
                             )
                             Text(
-                                text = "One story at a time, share a story you would be incomplete without.",
+                                text = "One story at a time, tell us a story you would be incomplete without.",
                                 fontSize = 14.sp,
                                 lineHeight = 20.sp,
                                 color = Color(0xFF6B5745),
                                 textAlign = TextAlign.Center
                             )
                             Spacer(
-                                modifier = Modifier.height(20.dp)
+                                modifier = Modifier.height(40.dp)
                             )
                             Button(
                                 onClick = {
@@ -360,7 +370,7 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                     Spacer(
-                        modifier = Modifier.height(40.dp)
+                        modifier = Modifier.height(80.dp)
                     )
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -369,12 +379,12 @@ class MainActivity : ComponentActivity() {
                         CommunityStep(
                             number = "1",
                             title = "Share",
-                            description = "Tell your Story"
+                            description = "Tell your story"
                         )
                         CommunityStep(
                             number = "2",
                             title = "Approved",
-                            description = "LinguArchiac approves integrity"
+                            description = "Approves integrity"
                         )
                         CommunityStep(
                             number = "3",
@@ -382,76 +392,12 @@ class MainActivity : ComponentActivity() {
                             description = "Posted on the archive"
                         )
                     }
-                    Spacer(
-                        modifier = Modifier.height(20.dp)
-                    )
-                    Text(
-                        text = "From a community whose voices deserve to be heard.",
-                        fontSize = 25.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color(0xFF5A4635)
-                    )
-                    Spacer(
-                        modifier = Modifier.height(20.dp)
-                    )
-                    Text(
-                        text = "Approved stories will be shared in the archive.",
-                        fontSize = 14.sp,
-                        color = Color(0xFF6B5745),
-                        textAlign = TextAlign.Center
-
-                    )
-                    Spacer(
-                        modifier = Modifier.height(18.dp)
-                    )
-                    Card(
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(20.dp),
-                        colors = CardDefaults.cardColors(
-                            containerColor = Color(0xFFE0D5C4)
-                        ),
-                        border = BorderStroke(
-                            1.dp,
-                            Color(0xFFB8A48A)
-                        ),
-                        elevation = CardDefaults.cardElevation(
-                            defaultElevation = 4.dp
-                        )
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(24.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text(
-                                text = "The archive will host your story.",
-                                fontSize = 17.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color(0xFF5A4635),
-                                textAlign = TextAlign.Center
-                            )
-                            Spacer(
-                                modifier = Modifier.height(10.dp)
-                            )
-                            Text(
-                                text = "Contributions will be available soon.",
-                                fontSize = 13.sp,
-                                lineHeight = 19.sp,
-                                color = Color(0xFF6B5745),
-                                textAlign = TextAlign.Center
-                            )
-                            Spacer(
-                                modifier = Modifier.height(30.dp)
-                            )
                         }
                     }
 
 
                 }
             }
-        }
-    }
 
     @Composable
     fun SubmissionThanksScreen(
@@ -562,7 +508,7 @@ class MainActivity : ComponentActivity() {
             )
             Text(
                 text = title,
-                fontSize = 14.sp,
+                fontSize = 15.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF5A4635),
                 textAlign = TextAlign.Center
@@ -572,7 +518,7 @@ class MainActivity : ComponentActivity() {
             )
             Text(
                 text = description,
-                fontSize = 11.sp,
+                fontSize = 15.sp,
                 lineHeight = 15.sp,
                 color = Color(0xFF6B5745),
                 textAlign = TextAlign.Center
@@ -1524,29 +1470,41 @@ fun AinuArchive(
             ) {
 
                 item {
-                    PreviewCard(
-                        title = "The Rich Man and the Demon",
-                        subtitle = "Ainu Folktale",
-                        navController = navController,
-                        route = "story1"
+                    ArchiveDocument(
+                        archiveNumber = "STORY 03",
+                        title="Pananpe Escapes",
+                        nativeLanguage = "Ainu",
+                        description = "",
+                        duration = "",
+                        onClick = {
+                            navController.navigate("story1")
+                        }
                     )
                 }
 
                 item {
-                    PreviewCard(
-                        title = "The Singing Cuckoo",
-                        subtitle = "Ainu Folktale",
-                        navController = navController,
-                        route = "story2"
+                    ArchiveDocument(
+                        archiveNumber = "STORY 03",
+                        title="Cuckoo & God",
+                        nativeLanguage = "Ainu",
+                        description = "",
+                        duration = "",
+                        onClick = {
+                            navController.navigate("story2")
+                        }
                     )
                 }
 
                 item {
-                    PreviewCard(
-                        title = "The Bad Bear",
-                        subtitle = "Ainu Folktale",
-                        navController = navController,
-                        route = "story3"
+                    ArchiveDocument(
+                        archiveNumber = "STORY 04",
+                        title="Girl in the Snow",
+                        nativeLanguage = "Ainu",
+                        description = "",
+                        duration = "",
+                        onClick = {
+                            navController.navigate("story3")
+                        }
                     )
                 }
             }
@@ -1627,7 +1585,7 @@ fun TotoArchive(
             )
 
             ArchiveFolder(
-                title = "Love Your Enemies",
+                title = "Love Enemies",
                 nativeLanguage = "বাংলা",
                 onClick = {
                     navController.navigate("totostory1")
@@ -1656,20 +1614,28 @@ fun TotoArchive(
             ) {
 
                 item {
-                    PreviewCard(
-                        title = "Moses's Law",
-                        subtitle = "Toto Bible Teaching",
-                        navController = navController,
-                        route = "totostory2"
+                    ArchiveDocument(
+                        archiveNumber = "STORY 02",
+                        title="Moses's Laws",
+                        nativeLanguage = "Toto",
+                        description = "",
+                        duration = "",
+                        onClick = {
+                            navController.navigate("totostory2")
+                        }
                     )
                 }
 
                 item {
-                    PreviewCard(
-                        title = "The Prodigal Son",
-                        subtitle = "Toto Bible Teaching",
-                        navController = navController,
-                        route = "totostory3"
+                    ArchiveDocument(
+                        archiveNumber = "STORY 03",
+                        title="Prodigal Son",
+                        nativeLanguage = "Toto",
+                        description = "",
+                        duration = "",
+                        onClick = {
+                            navController.navigate("totostory3")
+                        }
                     )
                 }
             }
@@ -1797,7 +1763,7 @@ fun MyaamiaArchive(
                         modifier = Modifier.height(10.dp)
                     )
                     Text(
-                        text="Current revitilization groups are trying to bring back the language. Their efforts are " +
+                        text="Current revitalization groups are trying to bring back the language. Their efforts are " +
                                 "across the Midwest.",
                         fontSize = 15.sp,
                         lineHeight = 22.sp,
@@ -1971,6 +1937,133 @@ fun ArchiveFolder(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun ArchiveDocument(
+    archiveNumber:String,
+    title:String,
+    nativeLanguage: String,
+    description: String,
+    duration:String,
+    onClick: () -> Unit
+){
+    val titleSize= when {
+        title.length > 45->16.sp
+        title.length > 30 ->18.sp
+        else -> 20.sp
+        }
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable{onClick()}
+    ){
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color(0xFFE2D1B5))
+                .border(
+                    1.dp,
+                    Color(0xFFBFA77F)
+                )
+                .padding(
+                    start=28.dp,
+                    end=16.dp,
+                    top=16.dp,
+                    bottom=16.dp
+                )
+        ){
+           Row(
+               modifier=Modifier.fillMaxWidth(),
+               horizontalArrangement = Arrangement.SpaceBetween
+           ){
+               Text(
+                   text=archiveNumber,
+                   fontSize = 15.sp,
+                   fontWeight = FontWeight.Bold,
+                   color=Color(0xFF4A3829)
+               )
+           }
+           Spacer(
+               modifier=Modifier.height(10.dp)
+           )
+            Text(
+                text=title,
+                fontSize = titleSize,
+                fontWeight = FontWeight.Bold,
+                color=Color(0xFF4A3829)
+            )
+            Spacer(modifier=Modifier.height(3.dp))
+            Text(
+                text=nativeLanguage,
+                fontSize = 12.sp,
+                color=Color(0xFF4A3829)
+            )
+            Spacer(
+                modifier=Modifier.height(12.dp)
+            )
+            Text(
+                text=description,
+                fontSize = 12.sp,
+                lineHeight = 18.sp,
+                color=Color(0xFF5A4635),
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+            )
+            Spacer(
+                modifier=Modifier.height(12.dp)
+            )
+            Row(
+                modifier=Modifier.fillMaxWidth(),
+                horizontalArrangement=Arrangement.SpaceBetween
+            ){
+                Text(
+                    text="Audio Recording",
+                    fontSize=10.sp,
+                    letterSpacing = 1.sp,
+                    fontWeight=FontWeight.Bold,
+                )
+                Spacer(
+                    modifier=Modifier.height(10.dp)
+                )
+                Text(
+                    text=duration,
+                    fontSize=10.sp,
+                    color=Color(0xFF5A4635)
+                )
+            }
+        }
+        Box(
+            modifier=Modifier
+                .align(Alignment.TopStart)
+                .offset(x=10.dp,y=15.dp)
+                .size(10.dp)
+                .border(7.dp,
+                    Color(0xFFB09D71),
+                    CircleShape)
+
+        )
+        Box(
+            modifier = Modifier
+                .align(Alignment.CenterStart)
+                .offset(x=10.dp)
+                .size(10.dp)
+                .border(7.dp,
+                    Color(0xFFB09D71),
+                    CircleShape)
+
+        )
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .offset(x=10.dp,y=(-15).dp)
+                .size(10.dp)
+                .border(7.dp,
+                    Color(0xFFB09D71),
+                    CircleShape)
+
+        )
     }
 }
 
